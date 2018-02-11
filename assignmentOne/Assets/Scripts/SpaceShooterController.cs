@@ -14,11 +14,28 @@ public class SpaceShooterController : MonoBehaviour {
 	public Boundary boundary;
 	public float tilt;
 
+	public GameObject shot;
+	public Transform shotSpawn;
+	public float fireRate;
+	private float nextFire;
+	public AudioSource audio;
+
 	private Rigidbody rb;
 
 	void Start()
 	{
 		rb = GetComponent<Rigidbody>();
+		audio = GetComponent<AudioSource> ();
+	}
+
+	void Update()
+	{
+		if (Input.GetButton ("Fire1") && Time.time > nextFire) {
+			audio.Play();
+			nextFire = Time.time + fireRate;
+			Instantiate (shot, shotSpawn.position, shotSpawn.rotation);
+
+		}
 	}
 
 	void FixedUpdate()
